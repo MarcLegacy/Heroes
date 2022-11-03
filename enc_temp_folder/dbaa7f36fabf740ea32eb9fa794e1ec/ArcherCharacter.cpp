@@ -49,6 +49,7 @@ void AArcherCharacter::FireArrow()
     }
     else
     {
+        FLogger::LogWarning(ArrowClass->GetClass()->GetName() + "not set!");
         UE_LOG(LogTemp, Warning, TEXT("ArrowClass not set!"));
         GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("ArrowClass not set!"));
     }
