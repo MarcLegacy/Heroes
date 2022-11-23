@@ -49,8 +49,7 @@ void AArcherCharacter::FireArrow()
     }
     else
     {
-        UE_LOG(LogTemp, Warning, TEXT("ArrowClass not set!"));
-        GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("ArrowClass not set!"));
+        FLogger::LogWarning("ArrowClass not set!");
     }
 
     if (AnimMontage != nullptr)
@@ -59,8 +58,7 @@ void AArcherCharacter::FireArrow()
     }
     else
     {
-        UE_LOG(LogTemp, Warning, TEXT("AnimMontage not set!"));
-        GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("AnimMontage not set!"));
+        FLogger::LogWarning("AnimMontage not set!");
     }
 }
 
@@ -70,13 +68,11 @@ void AArcherCharacter::BeginPlay()
 
     if (ArrowClass == nullptr)
     {
-        UE_LOG(LogTemp, Warning, TEXT("ArrowClass not set!"));
-        GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("ArrowClass not set!"));
+        FLogger::LogWarning("ArrowClass not set!");
     }
     if (AnimMontage == nullptr)
     {
-        UE_LOG(LogTemp, Warning, TEXT("AnimMontage not set!"));
-        GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("AnimMontage not set!"));
+        FLogger::LogWarning("AnimMontage not set!");
     }
 }
 

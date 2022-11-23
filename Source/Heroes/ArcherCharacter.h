@@ -27,12 +27,12 @@ public:
 		UAnimMontage* AnimMontage;
 
 protected:
-	void FireArrow();
-
 	virtual void BeginPlay() override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 private:
+	void FireArrow();
+
 	FVector CrosshairWorldLocation;
 	FVector ImpactPoint;
 	FVector ArrowSpawnLocation;
