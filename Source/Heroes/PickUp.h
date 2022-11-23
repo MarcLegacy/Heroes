@@ -4,35 +4,29 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Arrow.generated.h"
+#include "PickUp.generated.h"
 
 UCLASS()
-class HEROES_API AArrow : public AActor
+class HEROES_API APickUp : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
-	AArrow();
+	APickUp();
 
 	UPROPERTY(EditAnywhere)
 		USceneComponent* DefaultSceneRoot;
 
 	UPROPERTY(EditAnywhere)
-	    UStaticMeshComponent* Mesh;
+		UStaticMeshComponent* Mesh;
 
 	UPROPERTY(EditAnywhere)
 		class UBoxComponent* BoxCollider;
-
-	UPROPERTY(EditAnywhere)
-		class UProjectileMovementComponent* ProjectileMovement;
-
-	UPROPERTY(EditAnywhere)
-		UParticleSystem* HitParticle;
 
 protected:
 	virtual void BeginPlay() override;
 
 private:
 	UFUNCTION()
-	    void OnHit(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+		void OnComponentBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };

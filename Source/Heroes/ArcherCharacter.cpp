@@ -1,9 +1,11 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Personal Project made by Marc Meijering, if code is taken from others it will be specified in the same file.
 
 
 #include "ArcherCharacter.h"
 
 #include "Logger.h"
+//#include "Blueprint/UserWidget.h"
+#include "Blueprint/UserWidget.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/HUD.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -17,6 +19,40 @@ AArcherCharacter::AArcherCharacter()
     GetCharacterMovement()->bOrientRotationToMovement = false;
     GetMesh()->SetWorldLocationAndRotation(FVector(0.0, 0.0, -90), FRotator(0.0, 270.0, 0.0));
     bCanFire = true;
+}
+
+void AArcherCharacter::BeginPlay()
+{
+    Super::BeginPlay();
+
+    if (ArrowClass == nullptr)
+    {
+        FLogger::LogWarning("ArrowClass not set!");
+    }
+    if (AnimMontage == nullptr)
+    {
+        FLogger::LogWarning("AnimMontage not set!");
+    }
+
+    if (Crosshair != nullptr)
+    {
+        UUserWidget* CrosshairWidget = CreateWidget(GetWorld(), Crosshair);
+        if (CrosshairWidget != nullptr)
+        {
+            CrosshairWidget->AddToViewport();
+        }
+    }
+    else
+    {
+        FLogger::LogWarning("Crosshair not set!");
+    }
+}
+
+void AArcherCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+    Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+    PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AArcherCharacter::FireArrow);
 }
 
 void AArcherCharacter::FireArrow()
@@ -60,25 +96,4 @@ void AArcherCharacter::FireArrow()
     {
         FLogger::LogWarning("AnimMontage not set!");
     }
-}
-
-void AArcherCharacter::BeginPlay()
-{
-    Super::BeginPlay();
-
-    if (ArrowClass == nullptr)
-    {
-        FLogger::LogWarning("ArrowClass not set!");
-    }
-    if (AnimMontage == nullptr)
-    {
-        FLogger::LogWarning("AnimMontage not set!");
-    }
-}
-
-void AArcherCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-    Super::SetupPlayerInputComponent(PlayerInputComponent);
-
-    PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AArcherCharacter::FireArrow);
 }
