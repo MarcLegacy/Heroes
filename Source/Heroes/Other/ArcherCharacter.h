@@ -18,7 +18,7 @@ public:
 		bool bCanFire;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		UClass* ArrowClass;
+		TSubclassOf<class AArrow> ArrowClass;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		UAnimMontage* AnimMontage;

@@ -3,8 +3,8 @@
 
 #include "ArcherCharacter.h"
 
+#include "Arrow.h"
 #include "Logger.h"
-//#include "Blueprint/UserWidget.h"
 #include "Blueprint/UserWidget.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/HUD.h"
@@ -31,7 +31,7 @@ void AArcherCharacter::BeginPlay()
     }
     if (AnimMontage == nullptr)
     {
-        FLogger::LogWarning("AnimMontage not set!");
+        FLogger::LogWarning( "AnimMontage not set!");
     }
 
     if (Crosshair != nullptr)
@@ -79,9 +79,9 @@ void AArcherCharacter::FireArrow()
     ActorSpawnParameters.Owner = this;
     ActorSpawnParameters.Instigator = this;
 
-    if (ArrowClass != nullptr)
+    if (ArrowClass.Get() != nullptr)
     {
-        GetWorld()->SpawnActor(ArrowClass, &ArrowSpawnLocation, &ArrowSpawnRotation, ActorSpawnParameters);
+        GetWorld()->SpawnActor(ArrowClass.Get(), &ArrowSpawnLocation, &ArrowSpawnRotation, ActorSpawnParameters);
     }
     else
     {
