@@ -1,4 +1,5 @@
 // Personal Project made by Marc Meijering, if code is taken from others it will be specified in the same file.
+// File made with help from Youtube account "Druid Mechanics", series "Bow And Arrow": https://www.youtube.com/watch?v=uwKuinJCJyI
 
 #pragma once
 
