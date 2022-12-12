@@ -9,7 +9,6 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/HUD.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "Heroes/BFLs/FireArrow.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 
@@ -73,8 +72,21 @@ void AArcherCharacter::FireArrow()
     if (GetWorld()->LineTraceSingleByChannel(HitResult, CrosshairWorldLocation, ImpactPoint, ECC_Visibility, Params)) ImpactPoint = HitResult.ImpactPoint;
 
     ArrowSpawnLocation = GetMesh()->GetSocketTransform("arrow_socket").GetLocation();
+    ArrowSpawnRotation = UKismetMathLibrary::MakeRotFromX(ImpactPoint - ArrowSpawnLocation);
 
-    UFireArrow::FireArrow(ArrowSpawnLocation, ImpactPoint, ArrowClass);
+    FActorSpawnParameters ActorSpawnParameters;
+    ActorSpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+    ActorSpawnParameters.Owner = this;
+    ActorSpawnParameters.Instigator = this;
+
+    if (ArrowClass.Get() != nullptr)
+    {
+        GetWorld()->SpawnActor(ArrowClass.Get(), &ArrowSpawnLocation, &ArrowSpawnRotation, ActorSpawnParameters);
+    }
+    else
+    {
+        FLogger::LogWarning("ArrowClass not set!");
+    }
 
     if (AnimMontage != nullptr)
     {
