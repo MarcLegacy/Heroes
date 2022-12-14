@@ -29,7 +29,6 @@ private:
 
 	void SetupPerceptionSystem();
 
-private:
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))//(EditInstanceOnly, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
 		class UBehaviorTreeComponent* BehaviorTreeComponent;
 

@@ -6,22 +6,26 @@
 #include "GameFramework/Character.h"
 #include "BaseAI.generated.h"
 
+class APatrolPath;
+
 UCLASS()
 class HEROES_API ABaseAI : public ACharacter
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
 	ABaseAI();
 
+	APatrolPath* GetPatrolPath() const { return PatrolPath; }
+
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
+
+private:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		APatrolPath* PatrolPath;
 };

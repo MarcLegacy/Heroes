@@ -53,6 +53,8 @@ void ABaseAIController::OnTargetDetected(AActor* Actor, FAIStimulus Stimulus)
 
 void ABaseAIController::SetupPerceptionSystem()
 {
+    //TODO: Try to set the variable inside the blueprint.
+    
     SightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("Sight Config"));
     SetPerceptionComponent(*CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("Perception Component")));
     SightConfig->SightRadius = 500.0f;

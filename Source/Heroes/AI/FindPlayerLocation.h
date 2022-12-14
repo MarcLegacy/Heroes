@@ -13,7 +13,7 @@ class HEROES_API UFindPlayerLocation : public UBTTask_BlackboardBase
     GENERATED_BODY()
 
 public:
-    UFindPlayerLocation(FObjectInitializer const& ObjectInitializer);
+    UFindPlayerLocation(const FObjectInitializer& ObjectInitializer);
     EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
 private:
