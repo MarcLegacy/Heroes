@@ -11,7 +11,7 @@
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
 
-ABaseAIController::ABaseAIController(const FObjectInitializer& ObjectInitializer)
+ABaseAIController::ABaseAIController(FObjectInitializer const& ObjectInitializer)
 {
     static ConstructorHelpers::FObjectFinder<UBehaviorTree> BTObject(TEXT("BehaviorTree'/Game/AI/BT_BaseAI.BT_BaseAI'"));
 
@@ -21,7 +21,7 @@ ABaseAIController::ABaseAIController(const FObjectInitializer& ObjectInitializer
     }
 
     BehaviorTreeComponent = ObjectInitializer.CreateDefaultSubobject<UBehaviorTreeComponent>(this, TEXT("Behavior Tree Component"));
-    BlackboardComponent = ObjectInitializer.CreateDefaultSubobject<UBlackboardComponent>(this, TEXT("BlackBoard Component"));
+    Blackboard = ObjectInitializer.CreateDefaultSubobject<UBlackboardComponent>(this, TEXT("BlackBoard Component"));
 
     SetupPerceptionSystem();
 }
@@ -37,17 +37,17 @@ void ABaseAIController::OnPossess(APawn* InPawn)
 {
     Super::OnPossess(InPawn);
 
-    if (BlackboardComponent)
+    if (Blackboard)
     {
-        BlackboardComponent->InitializeBlackboard(*BehaviorTree->BlackboardAsset);
+        Blackboard->InitializeBlackboard(*BehaviorTree->BlackboardAsset);
     }
 }
 
-void ABaseAIController::OnTargetDetected(AActor* Actor, FAIStimulus Stimulus)
+void ABaseAIController::OnTargetDetected(AActor* Actor, const FAIStimulus Stimulus)
 {
     if (Cast<AHeroesCharacter>(Actor))
     {
-        BlackboardComponent->SetValueAsBool(BlackBoardKeys::CanSeePlayer, Stimulus.WasSuccessfullySensed());
+        Blackboard->SetValueAsBool(BlackBoardKeys::CanSeePlayer, Stimulus.WasSuccessfullySensed());
     }
 }
 

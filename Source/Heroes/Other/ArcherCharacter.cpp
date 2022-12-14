@@ -63,16 +63,19 @@ void AArcherCharacter::FireArrow()
     bCanFire = false;
 
     const APlayerCameraManager* PlayerCameraManager = UGameplayStatics::GetPlayerCameraManager(GetWorld(), 0);
-    CrosshairWorldLocation = PlayerCameraManager->K2_GetActorLocation();
-    ImpactPoint = CrosshairWorldLocation + PlayerCameraManager->GetActorForwardVector() * FVector(15000.f, 15000.f, 15000.f);
+    const FVector CrosshairWorldLocation = PlayerCameraManager->K2_GetActorLocation();
+    FVector ImpactPoint = CrosshairWorldLocation + PlayerCameraManager->GetActorForwardVector() * FVector(15000.f, 15000.f, 15000.f);
 
     FHitResult HitResult;
     FCollisionQueryParams Params;
     Params.AddIgnoredActor(this);
 
-    if (GetWorld()->LineTraceSingleByChannel(HitResult, CrosshairWorldLocation, ImpactPoint, ECC_Visibility, Params)) ImpactPoint = HitResult.ImpactPoint;
+    if (GetWorld()->LineTraceSingleByChannel(HitResult, CrosshairWorldLocation, ImpactPoint, ECC_Visibility, Params)) 
+    {
+        ImpactPoint = HitResult.ImpactPoint;
+    }
 
-    ArrowSpawnLocation = GetMesh()->GetSocketTransform("arrow_socket").GetLocation();
+    const FVector ArrowSpawnLocation = GetMesh()->GetSocketTransform("arrow_socket").GetLocation();
 
     UFireArrow::FireArrow(ArrowSpawnLocation, ImpactPoint, ArrowClass);
 

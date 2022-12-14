@@ -4,5 +4,10 @@
 
 namespace BlackBoardKeys
 {
-    const TCHAR* TargetLocation = TEXT("TargetLocation");   // TCHAR* used instead of FName& is because VS shows errors using the latter.
+    // TCHAR* used instead of FName& is because VS shows errors using the latter.
+    // inline used to avoid having variables being defined by different classes.
+
+    inline const TCHAR* TargetLocation = TEXT("TargetLocation");
+
+    inline const TCHAR* CanSeePlayer = TEXT("CanSeePlayer");    
 }

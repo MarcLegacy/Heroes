@@ -7,6 +7,8 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Perception/AIPerceptionStimuliSourceComponent.h"
+#include "Perception/AISense_Sight.h"
 
 //////////////////////////////////////////////////////////////////////////
 // AHeroesCharacter
@@ -49,6 +51,8 @@ AHeroesCharacter::AHeroesCharacter()
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
+
+	SetupStimulus();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -75,6 +79,13 @@ void AHeroesCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerIn
 	// handle touch devices
 	PlayerInputComponent->BindTouch(IE_Pressed, this, &AHeroesCharacter::TouchStarted);
 	PlayerInputComponent->BindTouch(IE_Released, this, &AHeroesCharacter::TouchStopped);
+}
+
+void AHeroesCharacter::SetupStimulus()
+{
+	Stimulus = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("Stimulus"));
+	Stimulus->RegisterForSense(TSubclassOf<UAISense_Sight>());
+	Stimulus->RegisterWithPerceptionSystem();
 }
 
 void AHeroesCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)

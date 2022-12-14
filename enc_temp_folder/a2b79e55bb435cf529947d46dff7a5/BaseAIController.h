@@ -14,10 +14,10 @@ class HEROES_API ABaseAIController : public AAIController
 	GENERATED_BODY()
 
 public:
-	ABaseAIController(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+	ABaseAIController(FObjectInitializer const& ObjectInitializer = FObjectInitializer::Get());
 
 	UFUNCTION(BlueprintGetter)
-		UBlackboardComponent* GetBlackboard() const { return BlackboardComponent; }
+		UBlackboardComponent* GetBlackboard() const { return Blackboard; }
 
 protected:
 	void BeginPlay() override;
@@ -25,7 +25,7 @@ protected:
 
 private:
 	UFUNCTION()
-	void OnTargetDetected(AActor* Actor, FAIStimulus Stimulus);
+	void OnTargetDetected(AActor* Actor, const FAIStimulus Stimulus);
 
 	void SetupPerceptionSystem();
 
@@ -36,6 +36,6 @@ private:
 	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))//(EditInstanceOnly, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
 		UBehaviorTree* BehaviorTree;
 
-    UBlackboardComponent* BlackboardComponent;
+    UBlackboardComponent* Blackboard;
 	class UAISenseConfig_Sight* SightConfig;
 };

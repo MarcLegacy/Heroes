@@ -33,9 +33,4 @@ protected:
 
 private:
 	void FireArrow();
-
-	FVector CrosshairWorldLocation;
-	FVector ImpactPoint;
-	FVector ArrowSpawnLocation;
-	FRotator ArrowSpawnRotation;
 };

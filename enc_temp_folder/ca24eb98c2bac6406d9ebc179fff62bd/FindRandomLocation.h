@@ -17,6 +17,6 @@ public:
     EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
 private:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true")) // (EditAnywhere, Category = "Search", meta = (AllowPrivateAccess = "true"))
 		float SearchRadius;
 };
