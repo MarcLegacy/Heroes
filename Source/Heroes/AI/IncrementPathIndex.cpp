@@ -21,16 +21,19 @@ EBTNodeResult::Type UIncrementPathIndex::ExecuteTask(UBehaviorTreeComponent& Own
 
     int Index = Controller->GetBlackboard()->GetValueAsInt(BlackBoardKeys::PatrolPathIndex);
 
-    if (Index >= Agent->GetPatrolPath()->Num() - 1 && Direction == EDirectionType::Forward)
+    if (BiDirectional)
     {
-        Direction = EDirectionType::Reverse;
-    }
-    else if (Index == 0 && Direction == EDirectionType::Reverse)
-    {
-        Direction = EDirectionType::Forward;
+        if (Index >= Agent->GetPatrolPath()->Num() - 1 && Direction == EDirectionType::Forward)
+        {
+            Direction = EDirectionType::Reverse;
+        }
+        else if (Index == 0 && Direction == EDirectionType::Reverse)
+        {
+            Direction = EDirectionType::Forward;
+        }
     }
 
-    Controller->GetBlackboard()->SetValueAsInt(BlackBoardKeys::PatrolPathIndex, Direction == EDirectionType::Forward ? ++Index : --Index);
+    Controller->GetBlackboard()->SetValueAsInt(BlackBoardKeys::PatrolPathIndex, Direction == EDirectionType::Forward ? std::abs(++Index) : std::abs(--Index));
 
     FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
     return EBTNodeResult::Succeeded;

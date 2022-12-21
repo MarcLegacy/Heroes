@@ -13,7 +13,7 @@
 
 ABaseAIController::ABaseAIController(const FObjectInitializer& ObjectInitializer)
 {
-    static ConstructorHelpers::FObjectFinder<UBehaviorTree> BTObject(TEXT("BehaviorTree'/Game/AI/BT_BaseAI.BT_BaseAI'"));
+    static ConstructorHelpers::FObjectFinder<UBehaviorTree> BTObject(TEXT("BehaviorTree'/Game/AI/BT_BaseAI.BT_BaseAI'")); // TODO: Find another way to retreive the BT
 
     if (BTObject.Succeeded())
     {
@@ -58,10 +58,10 @@ void ABaseAIController::SetupPerceptionSystem()
     SightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("Sight Config"));
     SetPerceptionComponent(*CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("Perception Component")));
     SightConfig->SightRadius = 500.0f;
-    SightConfig->LoseSightRadius = SightConfig->SightRadius + 50.0f;
+    SightConfig->LoseSightRadius = SightConfig->SightRadius + 25.0f;
     SightConfig->PeripheralVisionAngleDegrees = 90.0f;
     SightConfig->SetMaxAge(5.0f);
-    SightConfig->AutoSuccessRangeFromLastSeenLocation = 900.0f;
+    SightConfig->AutoSuccessRangeFromLastSeenLocation = 520.0f;
     SightConfig->DetectionByAffiliation.bDetectEnemies = true;
     SightConfig->DetectionByAffiliation.bDetectFriendlies = true;
     SightConfig->DetectionByAffiliation.bDetectNeutrals = true;

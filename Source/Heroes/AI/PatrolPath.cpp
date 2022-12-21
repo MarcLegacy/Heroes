@@ -13,7 +13,7 @@ APatrolPath::APatrolPath()
 
 FVector APatrolPath::GetPatrolPoint(const int Index) const
 {
-	if (Index >= PatrolPoints.Num())
+	if (!PatrolPoints.IsValidIndex(Index))
 	{
 		FLogger::LogWarning("Patrol Points doesn't contain index: " + Index);
 		return FVector(0, 0, 0);
