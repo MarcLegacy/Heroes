@@ -4,12 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Heroes/Interfaces/CombatInterface.h"
 #include "BaseAI.generated.h"
 
 class APatrolPath;
 
 UCLASS()
-class HEROES_API ABaseAI : public ACharacter
+class HEROES_API ABaseAI : public ACharacter, public ICombatInterface
 {
 	GENERATED_BODY()
 
@@ -18,7 +19,7 @@ public:
 
 	APatrolPath* GetPatrolPath() const { return PatrolPath; }
 
-	void MeleeAttack();
+	int MeleeAttack_Implementation() override;
 
     UAnimMontage* GetMontage() const { return Montage; }
 

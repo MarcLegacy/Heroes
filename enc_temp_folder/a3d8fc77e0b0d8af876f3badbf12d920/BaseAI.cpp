@@ -10,15 +10,17 @@ ABaseAI::ABaseAI()
 	PrimaryActorTick.bCanEverTick = true;
 }
 
-void ABaseAI::MeleeAttack()
+int ABaseAI::MeleeAttack_Implementation()
 {
 	if (Montage == nullptr)
 	{
 		FLogger::LogWarning("Montage == nullptr");
-		return;
+		return 0;
 	}
 
 	PlayAnimMontage(Montage);
+
+    return 0;
 }
 
 void ABaseAI::BeginPlay()
