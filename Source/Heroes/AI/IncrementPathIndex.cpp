@@ -17,9 +17,9 @@ UIncrementPathIndex::UIncrementPathIndex(const FObjectInitializer&)
 EBTNodeResult::Type UIncrementPathIndex::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
     const ABaseAIController* Controller = Cast<ABaseAIController>(OwnerComp.GetAIOwner());
-    const ABaseAI* Agent = Cast<ABaseAI>(Controller->GetPawn());
+    const ABaseAI* Agent = Controller->GetBaseAIPawn();
 
-    int Index = Controller->GetBlackboard()->GetValueAsInt(BlackBoardKeys::PatrolPathIndex);
+    int Index = OwnerComp.GetBlackboardComponent()->GetValueAsInt(BlackBoardKeys::PatrolPathIndex);
 
     if (BiDirectional)
     {
@@ -33,7 +33,7 @@ EBTNodeResult::Type UIncrementPathIndex::ExecuteTask(UBehaviorTreeComponent& Own
         }
     }
 
-    Controller->GetBlackboard()->SetValueAsInt(BlackBoardKeys::PatrolPathIndex, Direction == EDirectionType::Forward ? std::abs(++Index) : std::abs(--Index));
+    OwnerComp.GetBlackboardComponent()->SetValueAsInt(BlackBoardKeys::PatrolPathIndex, Direction == EDirectionType::Forward ? std::abs(++Index) : std::abs(--Index));
 
     FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
     return EBTNodeResult::Succeeded;

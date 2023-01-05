@@ -18,7 +18,7 @@ EBTNodeResult::Type UChasePlayer::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
     //TODO: Change player location to either directly the player location or set the target to the target actor.
 
     ABaseAIController* Controller = Cast<ABaseAIController>(OwnerComp.GetAIOwner());
-    const FVector PlayerLocation = Controller->GetBlackboard()->GetValueAsVector(BlackBoardKeys::TargetLocation);
+    const FVector PlayerLocation = OwnerComp.GetBlackboardComponent()->GetValueAsVector(GetSelectedBlackboardKey());
 
     UAIBlueprintHelperLibrary::SimpleMoveToLocation(Controller, PlayerLocation);
 

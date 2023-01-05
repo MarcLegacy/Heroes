@@ -19,4 +19,8 @@ public:
 	UFindPatrolPathPoint(const FObjectInitializer& ObjectInitializer);
 
     EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+
+private:
+	UPROPERTY(EditAnywhere, Category = Blackboard, meta = (AllowPrivateAccess = "true"))
+        FBlackboardKeySelector PatrolPathVectorKey;
 };

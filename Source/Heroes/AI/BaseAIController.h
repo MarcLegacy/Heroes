@@ -4,6 +4,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "BaseAI.h"
 #include "AIModule/Classes/AIController.h"
 #include "Perception/AIPerceptionTypes.h"
 #include "BaseAIController.generated.h"
@@ -16,8 +17,7 @@ class HEROES_API ABaseAIController : public AAIController
 public:
 	ABaseAIController(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
-	UFUNCTION(BlueprintGetter)
-		UBlackboardComponent* GetBlackboard() const { return BlackboardComponent; }
+    ABaseAI* GetBaseAIPawn() const { return BaseAIPawn; }
 
 protected:
 	void BeginPlay() override;
@@ -29,12 +29,8 @@ private:
 
 	void SetupPerceptionSystem();
 
-	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))//(EditInstanceOnly, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
-		class UBehaviorTreeComponent* BehaviorTreeComponent;
-
-	UPROPERTY(BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))//(EditInstanceOnly, BlueprintReadWrite, Category = "AI", meta = (AllowPrivateAccess = "true"))
-		UBehaviorTree* BehaviorTree;
-
+	UPROPERTY()
     UBlackboardComponent* BlackboardComponent;
 	class UAISenseConfig_Sight* SightConfig;
+	ABaseAI* BaseAIPawn;
 };

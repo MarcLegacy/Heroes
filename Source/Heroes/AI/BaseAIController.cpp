@@ -4,43 +4,38 @@
 #include "BaseAIController.h"
 
 #include "BehaviorTree/BehaviorTree.h"
-#include "BehaviorTree/BehaviorTreeComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Heroes/Other/BlackBoardKeys.h"
 #include "Heroes/Other/HeroesCharacter.h"
+#include "Heroes/Other/Logger.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
 
 ABaseAIController::ABaseAIController(const FObjectInitializer& ObjectInitializer)
 {
-    static ConstructorHelpers::FObjectFinder<UBehaviorTree> BTObject(TEXT("BehaviorTree'/Game/AI/BT_BaseAI.BT_BaseAI'")); // TODO: Find another way to retreive the BT
-
-    if (BTObject.Succeeded())
-    {
-        BehaviorTree = BTObject.Object;
-    }
-
-    BehaviorTreeComponent = ObjectInitializer.CreateDefaultSubobject<UBehaviorTreeComponent>(this, TEXT("Behavior Tree Component"));
-    BlackboardComponent = ObjectInitializer.CreateDefaultSubobject<UBlackboardComponent>(this, TEXT("BlackBoard Component"));
-
     SetupPerceptionSystem();
 }
 
 void ABaseAIController::BeginPlay()
 {
     Super::BeginPlay();
-    RunBehaviorTree(BehaviorTree);
-    BehaviorTreeComponent->StartTree(*BehaviorTree);
+
+    UseBlackboard(BaseAIPawn->GetBehaviorTree()->BlackboardAsset, BlackboardComponent);
 }
 
 void ABaseAIController::OnPossess(APawn* InPawn)
 {
     Super::OnPossess(InPawn);
 
-    if (BlackboardComponent)
+    BaseAIPawn = GetPawn<ABaseAI>();
+
+    if (BaseAIPawn == nullptr)
     {
-        BlackboardComponent->InitializeBlackboard(*BehaviorTree->BlackboardAsset);
+        FLogger::LogFailedCast(Owner->StaticClass()->GetName(), GetPawn()->GetName(), ABaseAI::StaticClass()->GetName());
+        return;
     }
+
+    RunBehaviorTree(BaseAIPawn->GetBehaviorTree());
 }
 
 void ABaseAIController::OnTargetDetected(AActor* Actor, FAIStimulus Stimulus)

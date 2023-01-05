@@ -8,7 +8,6 @@
 APatrolPath::APatrolPath()
 {
 	PrimaryActorTick.bCanEverTick = true;
-
 }
 
 FVector APatrolPath::GetPatrolPoint(const int Index) const

@@ -3,6 +3,8 @@
 
 #include "BaseAI.h"
 
+#include "PatrolPath.h"
+#include "BehaviorTree/BehaviorTree.h"
 #include "Heroes/Other/Logger.h"
 
 ABaseAI::ABaseAI()
@@ -14,23 +16,30 @@ void ABaseAI::MeleeAttack()
 {
 	if (Montage == nullptr)
 	{
-		FLogger::LogWarning("Montage == nullptr");
+		FLogger::LogNullptr(this->StaticClass()->GetName(), UAnimMontage::StaticClass()->GetName());
 		return;
 	}
-
 	PlayAnimMontage(Montage);
 }
 
 void ABaseAI::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	if (Montage == nullptr)
+	{
+		FLogger::LogObjectNotSet(this->GetActorNameOrLabel(), UAnimMontage::StaticClass()->GetName());
+	}
+
+	if (BehaviorTree == nullptr)
+	{
+		FLogger::LogObjectNotSet(this->GetActorNameOrLabel(), UBehaviorTree::StaticClass()->GetName());
+	}
 }
 
 void ABaseAI::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void ABaseAI::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)

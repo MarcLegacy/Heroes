@@ -8,8 +8,9 @@
 #include "PatrolPath.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Heroes/Other/BlackBoardKeys.h"
+#include "Heroes/Other/Logger.h"
 
-UFindPatrolPathPoint::UFindPatrolPathPoint(const FObjectInitializer& ObjectInitializer)
+UFindPatrolPathPoint::UFindPatrolPathPoint(const FObjectInitializer&)
 {
     NodeName = TEXT("Find Path Path Point");
 }
@@ -17,15 +18,23 @@ UFindPatrolPathPoint::UFindPatrolPathPoint(const FObjectInitializer& ObjectIniti
 EBTNodeResult::Type UFindPatrolPathPoint::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
     const ABaseAIController* Controller = Cast<ABaseAIController>(OwnerComp.GetAIOwner());
-    const ABaseAI* Agent = Cast<ABaseAI>(Controller->GetPawn());
+    if (Controller == nullptr)
+    {
+        FLogger::LogFailedCast(this->StaticClass()->GetName(), OwnerComp.GetAIOwner()->GetName(), ABaseAIController::StaticClass()->GetName());
+        FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
+        return EBTNodeResult::Succeeded;
+    }
+
+    const ABaseAI* Agent = Controller->GetBaseAIPawn();
     const APatrolPath* PatrolPath = Agent->GetPatrolPath();
-    const int Index = Controller->GetBlackboard()->GetValueAsInt(BlackBoardKeys::PatrolPathIndex);
+    const int Index = OwnerComp.GetBlackboardComponent()->GetValueAsInt(GetSelectedBlackboardKey());
 
     const FVector PatrolPoint = PatrolPath->GetPatrolPoint(Index);
     const FVector PointPosition = PatrolPath->GetActorTransform().TransformPosition(PatrolPoint);
 
-    Controller->GetBlackboard()->SetValueAsVector(BlackBoardKeys::PatrolPathVector, PointPosition);
+    OwnerComp.GetBlackboardComponent()->SetValueAsVector(PatrolPathVectorKey.SelectedKeyName, PointPosition);
 
     FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
     return EBTNodeResult::Succeeded;
 }
+

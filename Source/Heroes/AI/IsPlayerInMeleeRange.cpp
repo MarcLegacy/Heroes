@@ -23,5 +23,5 @@ void UIsPlayerInMeleeRange::OnBecomeRelevant(UBehaviorTreeComponent& OwnerComp, 
     const ABaseAI* Agent = Cast<ABaseAI>(Controller->GetPawn());
     const ACharacter* Player = UGameplayStatics::GetPlayerCharacter(GetWorld(), 0);
 
-    Controller->GetBlackboard()->SetValueAsBool(BlackBoardKeys::IsPlayerInMeleeRange, Agent->GetDistanceTo(Player) <= MeleeRange);
+    OwnerComp.GetBlackboardComponent()->SetValueAsBool(BlackBoardKeys::IsPlayerInMeleeRange, Agent->GetDistanceTo(Player) <= MeleeRange);
 }

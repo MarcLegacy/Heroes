@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "BaseAI.generated.h"
 
+class UBehaviorTree;
 class APatrolPath;
 
 UCLASS()
@@ -22,6 +23,8 @@ public:
 
     UAnimMontage* GetMontage() const { return Montage; }
 
+	UBehaviorTree* GetBehaviorTree() const { return BehaviorTree; };
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -35,4 +38,7 @@ private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		UAnimMontage* Montage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		UBehaviorTree* BehaviorTree;
 };
