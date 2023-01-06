@@ -20,7 +20,10 @@ void ABaseAIController::BeginPlay()
 {
     Super::BeginPlay();
 
-    UseBlackboard(BaseAIPawn->GetBehaviorTree()->BlackboardAsset, BlackboardComponent);
+    if (FLogger::CheckAndLogIsValidPtr<ABaseAI>(BaseAIPawn, __FUNCTION__) && FLogger::CheckAndLogIsValidPtr<UBehaviorTree>(BaseAIPawn->GetBehaviorTree(),  __FUNCTION__))
+    {
+        UseBlackboard(BaseAIPawn->GetBehaviorTree()->BlackboardAsset, BlackboardComponent);
+    }
 }
 
 void ABaseAIController::OnPossess(APawn* InPawn)
@@ -29,18 +32,15 @@ void ABaseAIController::OnPossess(APawn* InPawn)
 
     BaseAIPawn = GetPawn<ABaseAI>();
 
-    if (BaseAIPawn == nullptr)
+    if (FLogger::CheckAndLogIsValidPtr<ABaseAI>(BaseAIPawn, __FUNCTION__))
     {
-        FLogger::LogFailedCast(Owner->StaticClass()->GetName(), GetPawn()->GetName(), ABaseAI::StaticClass()->GetName());
-        return;
+        RunBehaviorTree(BaseAIPawn->GetBehaviorTree());
     }
-
-    RunBehaviorTree(BaseAIPawn->GetBehaviorTree());
 }
 
 void ABaseAIController::OnTargetDetected(AActor* Actor, FAIStimulus Stimulus)
 {
-    if (Cast<AHeroesCharacter>(Actor))
+    if (Cast<AHeroesCharacter>(Actor) != nullptr)
     {
         BlackboardComponent->SetValueAsBool(BlackBoardKeys::CanSeePlayer, Stimulus.WasSuccessfullySensed());
     }

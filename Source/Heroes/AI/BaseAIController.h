@@ -20,8 +20,8 @@ public:
     ABaseAI* GetBaseAIPawn() const { return BaseAIPawn; }
 
 protected:
-	void BeginPlay() override;
-	void OnPossess(APawn* InPawn) override;
+	virtual void BeginPlay() override;
+	virtual void OnPossess(APawn* InPawn) override;
 
 private:
 	UFUNCTION()

@@ -17,16 +17,31 @@ UFindPatrolPathPoint::UFindPatrolPathPoint(const FObjectInitializer&)
 
 EBTNodeResult::Type UFindPatrolPathPoint::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-    const ABaseAIController* Controller = Cast<ABaseAIController>(OwnerComp.GetAIOwner());
-    if (Controller == nullptr)
-    {
-        FLogger::LogFailedCast(this->StaticClass()->GetName(), OwnerComp.GetAIOwner()->GetName(), ABaseAIController::StaticClass()->GetName());
-        FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
-        return EBTNodeResult::Succeeded;
-    }
+    //const ABaseAIController* Controller = Cast<ABaseAIController>(OwnerComp.GetAIOwner());
+    //if (!FLogger::CheckAndLogIsValidPtr<ABaseAIController>(Controller, __FUNCTION__))
+    //{
+    //    FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
+    //    return EBTNodeResult::Succeeded;
+    //}
 
+    //const ABaseAI* Agent = Controller->GetBaseAIPawn();
+    //if (!FLogger::CheckAndLogIsValidPtr<ABaseAI>(Agent, __FUNCTION__))
+    //{
+    //    FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
+    //    return EBTNodeResult::Succeeded;
+    //}
+
+    //const APatrolPath* PatrolPath = Agent->GetPatrolPath();
+    //if (!FLogger::CheckAndLogIsValidPtr<APatrolPath>(PatrolPath, __FUNCTION__))
+    //{
+    //    FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
+    //    return EBTNodeResult::Succeeded;
+    //}
+
+    const ABaseAIController* Controller = Cast<ABaseAIController>(OwnerComp.GetAIOwner());
     const ABaseAI* Agent = Controller->GetBaseAIPawn();
     const APatrolPath* PatrolPath = Agent->GetPatrolPath();
+
     const int Index = OwnerComp.GetBlackboardComponent()->GetValueAsInt(GetSelectedBlackboardKey());
 
     const FVector PatrolPoint = PatrolPath->GetPatrolPoint(Index);
