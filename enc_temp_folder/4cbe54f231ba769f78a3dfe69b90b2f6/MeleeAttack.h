@@ -5,27 +5,21 @@
 
 #include "CoreMinimal.h"
 #include "BehaviorTree/Tasks/BTTask_BlackboardBase.h"
-#include "FindPatrolPathPoint.generated.h"
+#include "MeleeAttack.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class HEROES_API UFindPatrolPathPoint : public UBTTask_BlackboardBase
+class HEROES_API UMeleeAttack : public UBTTask_BlackboardBase
 {
 	GENERATED_BODY()
-
 public:
-	UFindPatrolPathPoint(const FObjectInitializer& ObjectInitializer);
+	UMeleeAttack(const FObjectInitializer& ObjectInitializer);
 
     EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
 private:
-    void InitializeFromAsset(UBehaviorTree& Asset) override;
-
-	UPROPERTY(EditAnywhere, Category = Blackboard, meta = (AllowPrivateAccess = "true"))
-        FBlackboardKeySelector PatrolPathPointKey;
-
-    UPROPERTY(EditAnywhere, Category = Blackboard, meta = (AllowPrivateAccess = "true"))
-        FBlackboardKeySelector PatrolPathIndexKey;
+	bool MontageHasFinished(const class ABaseAI* Agent);
+	
 };

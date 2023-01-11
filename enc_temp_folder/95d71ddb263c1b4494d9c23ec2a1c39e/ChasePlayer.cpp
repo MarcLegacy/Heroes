@@ -7,13 +7,10 @@
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Blueprint/AIBlueprintHelperLibrary.h"
 #include "Heroes/Other/BlackBoardKeys.h"
-#include "Heroes/Other/Logger.h"
 
 UChasePlayer::UChasePlayer(const FObjectInitializer& ObjectInitializer)
 {
     NodeName = TEXT("Chase Player");
-
-    TargetLocationKey.AddVectorFilter(this, GET_MEMBER_NAME_CHECKED(UChasePlayer, TargetLocationKey));
 }
 
 EBTNodeResult::Type UChasePlayer::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
@@ -21,20 +18,10 @@ EBTNodeResult::Type UChasePlayer::ExecuteTask(UBehaviorTreeComponent& OwnerComp,
     //TODO: Change player location to either directly the player location or set the target to the target actor.
 
     ABaseAIController* Controller = Cast<ABaseAIController>(OwnerComp.GetAIOwner());
-    if (!FLogger::CheckAndLogIsValidPtr(Controller, __FUNCTION__)) return EBTNodeResult::Failed;
-
-    const FVector PlayerLocation = OwnerComp.GetBlackboardComponent()->GetValueAsVector(TargetLocationKey.SelectedKeyName);
+    const FVector PlayerLocation = OwnerComp.GetBlackboardComponent()->GetValueAsVector(GetSelectedBlackboardKey());
 
     UAIBlueprintHelperLibrary::SimpleMoveToLocation(Controller, PlayerLocation);
 
     FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
     return EBTNodeResult::Succeeded;
-}
-
-void UChasePlayer::InitializeFromAsset(UBehaviorTree& Asset)
-{
-    Super::InitializeFromAsset(Asset);
-
-    const UBlackboardData* BlackboardAsset = GetBlackboardAsset();
-    TargetLocationKey.ResolveSelectedKey(*BlackboardAsset);
 }

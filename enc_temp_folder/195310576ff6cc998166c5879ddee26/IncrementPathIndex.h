@@ -5,24 +5,27 @@
 
 #include "CoreMinimal.h"
 #include "BehaviorTree/Tasks/BTTask_BlackboardBase.h"
-#include "ChasePlayer.generated.h"
+#include "IncrementPathIndex.generated.h"
 
-/**
- * 
- */
 UCLASS()
-class HEROES_API UChasePlayer : public UBTTask_BlackboardBase
+class HEROES_API UIncrementPathIndex : public UBTTask_BlackboardBase
 {
 	GENERATED_BODY()
 
 public:
-	UChasePlayer(const FObjectInitializer& ObjectInitializer);
+	UIncrementPathIndex(const FObjectInitializer& ObjectInitializer);
 
 	EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
 private:
-	void InitializeFromAsset(UBehaviorTree& Asset) override;
+	enum class EDirectionType
+	{
+	    Forward,
+		Reverse,
+	};
 
-	UPROPERTY(EditAnywhere, Category = Blackboard, meta = (AllowPrivateAccess = "true"))
-		FBlackboardKeySelector TargetLocationKey;
+	EDirectionType Direction = EDirectionType::Forward;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		bool BiDirectional = true;
 };

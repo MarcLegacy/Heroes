@@ -54,11 +54,11 @@ void FLogger::LogPropertyNotSet(const AActor* CurrentActor, const FName& Propert
     
 }
 
-//void FLogger::LogNullptr(const FString& FunctionName, const FName& PtrName, const bool bToScreen,
-//    const float DisplayTime)
-//{
-//    LogError(FunctionName + ": " + PtrName.ToString() + " is a nullptr!", bToScreen, DisplayTime);
-//}
+void FLogger::LogNullptr(const FString& FunctionName, const FName& PtrName, const bool bToScreen,
+    const float DisplayTime)
+{
+    LogError(FunctionName + ": " + PtrName.ToString() + " is a nullptr!", bToScreen, DisplayTime);
+}
 
 bool FLogger::CheckAndLogIsPropertySet(const AActor* CurrentActor, const UObject* Property, const FName& PropertyName,
                                        const bool bToScreen, const float DisplayTime)
@@ -72,17 +72,17 @@ bool FLogger::CheckAndLogIsPropertySet(const AActor* CurrentActor, const UObject
     return true;
 }
 
-//bool FLogger::CheckAndLogIsValidPtr(const UObject* PtrToCheck, const FString& FunctionName, const FName& PtrName,
-//    const bool bToScreen, const float DisplayTime)
-//{
-//    if (PtrToCheck == nullptr)
-//    {
-//        LogNullptr(FunctionName, PtrName, bToScreen, DisplayTime);
-//        return false;
-//    }
-//
-//    return true;
-//}
+bool FLogger::CheckAndLogIsValidPtr(const UObject* PtrToCheck, const FString& FunctionName, const FName& PtrName,
+    const bool bToScreen, const float DisplayTime)
+{
+    if (PtrToCheck == nullptr)
+    {
+        LogNullptr(FunctionName, PtrName, bToScreen, DisplayTime);
+        return false;
+    }
+
+    return true;
+}
 
 
 

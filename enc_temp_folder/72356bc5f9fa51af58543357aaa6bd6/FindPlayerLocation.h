@@ -17,14 +17,9 @@ public:
     EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 
 private:
-    void InitializeFromAsset(UBehaviorTree& Asset) override;
-
     UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
         bool SearchRandom;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
         float SearchRadius;
-
-    UPROPERTY(EditAnywhere, Category = Blackboard, meta = (AllowPrivateAccess = "true"))
-        FBlackboardKeySelector TargetLocationKey;
 };

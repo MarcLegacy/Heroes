@@ -19,10 +19,4 @@ public:
 	UChasePlayer(const FObjectInitializer& ObjectInitializer);
 
 	EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
-
-private:
-	void InitializeFromAsset(UBehaviorTree& Asset) override;
-
-	UPROPERTY(EditAnywhere, Category = Blackboard, meta = (AllowPrivateAccess = "true"))
-		FBlackboardKeySelector TargetLocationKey;
 };

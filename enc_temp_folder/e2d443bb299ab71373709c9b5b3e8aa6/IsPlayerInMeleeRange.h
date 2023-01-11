@@ -22,7 +22,5 @@ public:
 private:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		float MeleeRange = 25.0f;
-
-	UPROPERTY(EditAnywhere, Category = Blackboard, meta = (AllowPrivateAccess = "true"))
-		FBlackboardKeySelector IsPlayerInMeleeRangeKey;
+	
 };

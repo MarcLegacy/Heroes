@@ -12,25 +12,18 @@ UMeleeAttack::UMeleeAttack(const FObjectInitializer& ObjectInitializer)
     NodeName = TEXT("Melee Attack");
 }
 
-EBTNodeResult::Type UMeleeAttack::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8*)
+EBTNodeResult::Type UMeleeAttack::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-    if (ABaseAI* Agent = Cast<ABaseAI>(OwnerComp.GetAIOwner()->GetPawn()))
+    const ABaseAIController* Controller = Cast<ABaseAIController>(OwnerComp.GetAIOwner());
+    if (!FLogger::CheckAndLogIsValidPtr(Controller, __FUNCTION__)) return EBTNodeResult::Failed;
+
+    ABaseAI* Agent = Controller->GetBaseAIPawn();
+    if (Agent->GetMesh()->GetAnimInstance()->Montage_GetIsStopped(Agent->GetMontage()))  // Makes sure the montage is finished before playing again.
     {
-        if (MontageHasFinished(Agent))  // Makes sure the montage is finished before playing again.
-        {
-            Agent->MeleeAttack();
-        }
-    }
-    else
-    {
-        FLogger::LogWarning("Agent == nullptr");
+        Agent->MeleeAttack();
     }
 
     FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
     return EBTNodeResult::Succeeded;
 }
 
-bool UMeleeAttack::MontageHasFinished(const ABaseAI* Agent)
-{
-    return Agent->GetMesh()->GetAnimInstance()->Montage_GetIsStopped(Agent->GetMontage());
-}

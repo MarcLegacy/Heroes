@@ -14,7 +14,7 @@ ABaseAI::ABaseAI()
 
 void ABaseAI::MeleeAttack()
 {
-	if (FLogger::CheckAndLogIsValidPtr(Montage, __FUNCTION__))
+	if (FLogger::CheckAndLogIsValidPtr(Montage, __FUNCTION__, GET_MEMBER_NAME_CHECKED(ABaseAI, Montage)))
 	{
 		PlayAnimMontage(Montage);
 	}

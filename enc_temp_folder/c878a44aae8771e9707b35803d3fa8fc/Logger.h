@@ -34,7 +34,7 @@ public:
      * @param FunctionName: pass in '__FUNCTION__' to get the name of the class and function. 
      * @param PtrName: pass in 'GET_MEMBER_NAME_CHECKED(ClassName, MemberName) to get the name of the pointer.
      */
-    //static void LogNullptr(const FString& FunctionName, const FName& PtrName, const bool bToScreen = true, const float DisplayTime = STANDARD_DISPLAY_TIME);
+    static void LogNullptr(const FString& FunctionName, const FName& PtrName, const bool bToScreen = true, const float DisplayTime = STANDARD_DISPLAY_TIME);
 
  //   template <typename T>
 	//static bool CheckAndLogIsObjectSet(const T* ObjectToCheck, const AActor* CurrentActor = nullptr, const bool bToScreen = true, const float DisplayTime = STANDARD_DISPLAY_TIME);
@@ -55,7 +55,7 @@ public:
      * @param FunctionName: Pass in '__FUNCTION__' to get the class and function.
      * @param PtrName: Pass in 'GET_MEMBER_NAME_CHECKED(ClassName, MemberName) to get the name of the property. 
      */
-    //static bool CheckAndLogIsValidPtr(const UObject* PtrToCheck, const FString& FunctionName, const FName& PtrName, const bool bToScreen = true, const float DisplayTime = STANDARD_DISPLAY_TIME);
+    static bool CheckAndLogIsValidPtr(const UObject* PtrToCheck, const FString& FunctionName, const FName& PtrName, const bool bToScreen = true, const float DisplayTime = STANDARD_DISPLAY_TIME);
 
 private:
 	// 'static' is needed because the variable is used in static functions.

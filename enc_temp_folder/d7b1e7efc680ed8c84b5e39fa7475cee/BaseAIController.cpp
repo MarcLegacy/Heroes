@@ -32,7 +32,7 @@ void ABaseAIController::OnPossess(APawn* InPawn)
 
     BaseAIPawn = GetPawn<ABaseAI>();
 
-    if (FLogger::CheckAndLogIsValidPtr(BaseAIPawn, __FUNCTION__))
+    if (FLogger::CheckAndLogIsValidPtr(BaseAIPawn, __FUNCTION__, GET_MEMBER_NAME_CHECKED(ABaseAIController, BaseAIPawn)))
     {
         RunBehaviorTree(BaseAIPawn->GetBehaviorTree());
     }
@@ -42,7 +42,7 @@ void ABaseAIController::OnTargetDetected(AActor* Actor, FAIStimulus Stimulus)
 {
     if (Cast<AHeroesCharacter>(Actor) != nullptr)
     {
-        BlackboardComponent->SetValueAsBool(BlackBoardKeys::CanSeePlayer, Stimulus.WasSuccessfullySensed());    // TODO: find another way to retrieve the Blackboard key.
+        BlackboardComponent->SetValueAsBool(BlackBoardKeys::CanSeePlayer, Stimulus.WasSuccessfullySensed());
     }
 }
 

@@ -24,8 +24,13 @@ private:
 		Reverse,
 	};
 
+	void InitializeFromAsset(UBehaviorTree& Asset) override;
+
 	EDirectionType Direction = EDirectionType::Forward;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		bool BiDirectional = true;
+
+	UPROPERTY(EditAnywhere, Category = Blackboard, meta = (AllowPrivateAccess = "true"))
+		FBlackboardKeySelector PatrolPathIndexKey;
 };

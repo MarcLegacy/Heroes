@@ -21,14 +21,19 @@ UFindPatrolPathPoint::UFindPatrolPathPoint(const FObjectInitializer& ObjectIniti
 EBTNodeResult::Type UFindPatrolPathPoint::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
     const ABaseAIController* Controller = Cast<ABaseAIController>(OwnerComp.GetAIOwner());
-    if (!FLogger::CheckAndLogIsValidPtr(Controller, __FUNCTION__)) return EBTNodeResult::Failed;
+    if (!FLogger::CheckAndLogIsValidPtr(Controller, __FUNCTION__))
+    {
+        return EBTNodeResult::Failed;
+    }
 
     const APatrolPath* PatrolPath = Controller->GetBaseAIPawn()->GetPatrolPath();
-    if (!FLogger::CheckAndLogIsValidPtr(PatrolPath, __FUNCTION__)) return EBTNodeResult::Failed;
+    if (!FLogger::CheckAndLogIsValidPtr(PatrolPath, __FUNCTION__))
+    {
+        return EBTNodeResult::Failed;
+    }
 
-    // Retrieves the current index to get the location for the next position to move to.
     UBlackboardComponent* BlackboardComponent = OwnerComp.GetBlackboardComponent();
-    const int Index = BlackboardComponent->GetValueAsInt(PatrolPathIndexKey.SelectedKeyName);
+    const int Index = BlackboardComponent->GetValueAsInt(GetSelectedBlackboardKey());
     const FVector PatrolPoint = PatrolPath->GetPatrolPoint(Index);
     const FVector PointPosition = PatrolPath->GetActorTransform().TransformPosition(PatrolPoint);
 

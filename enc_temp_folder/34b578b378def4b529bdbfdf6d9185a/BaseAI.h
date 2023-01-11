@@ -17,15 +17,15 @@ class HEROES_API ABaseAI : public ACharacter
 public:
 	ABaseAI();
 
-	// Returned variable is set in the editor.
+	// Returned variable set in the editor.
 	APatrolPath* GetPatrolPath() const { return PatrolPath; }
 
 	void MeleeAttack();
 
-	// Returned variable is set in the editor.
+	// Returned variable set in the editor.
     UAnimMontage* GetMontage() const { return Montage; }
 
-    // Returned variable is set in the editor.
+    // Returned variable set in the editor.
     UBehaviorTree* GetBehaviorTree() const { return BehaviorTree; };
 
 protected:
