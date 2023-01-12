@@ -48,23 +48,11 @@ void ABaseAIController::OnTargetDetected(AActor* Actor, FAIStimulus Stimulus)
 
 void ABaseAIController::SetupPerceptionSystem()
 {
-    //TODO: Try to set the variable inside the blueprint.
-    
     SightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("Sight Config"));
     SetPerceptionComponent(*CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("Perception Component")));
-    SightConfig->SightRadius = 500.0f;
-    SightConfig->LoseSightRadius = SightConfig->SightRadius + 25.0f;
-    SightConfig->PeripheralVisionAngleDegrees = 90.0f;
-    SightConfig->SetMaxAge(5.0f);
-    SightConfig->AutoSuccessRangeFromLastSeenLocation = 520.0f;
-    SightConfig->DetectionByAffiliation.bDetectEnemies = true;
-    SightConfig->DetectionByAffiliation.bDetectFriendlies = true;
-    SightConfig->DetectionByAffiliation.bDetectNeutrals = true;
-
     GetPerceptionComponent()->SetDominantSense(*SightConfig->GetSenseImplementation());
     GetPerceptionComponent()->OnTargetPerceptionUpdated.AddDynamic(this, &ABaseAIController::OnTargetDetected);
     GetPerceptionComponent()->ConfigureSense(*SightConfig);
-
 }
 
 
