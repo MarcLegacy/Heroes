@@ -23,7 +23,7 @@ public:
 	void MeleeAttack();
 
 	// Returned variable is set in the editor.
-    UAnimMontage* GetMontage() const { return Montage; }
+    UAnimMontage* GetMontage() const { return MeleeMontage; }
 
     // Returned variable is set in the editor.
     UBehaviorTree* GetBehaviorTree() const { return BehaviorTree; };
@@ -36,7 +36,7 @@ private:
 		APatrolPath* PatrolPath;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
-		UAnimMontage* Montage;
+		UAnimMontage* MeleeMontage;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
 		UBehaviorTree* BehaviorTree;

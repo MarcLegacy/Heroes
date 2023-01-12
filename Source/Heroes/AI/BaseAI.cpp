@@ -14,9 +14,9 @@ ABaseAI::ABaseAI()
 
 void ABaseAI::MeleeAttack()
 {
-	if (FLogger::CheckAndLogIsValidPtr(Montage, __FUNCTION__))
+	if (FLogger::CheckAndLogIsValidPtr(MeleeMontage, __FUNCTION__))
 	{
-		PlayAnimMontage(Montage);
+		PlayAnimMontage(MeleeMontage);
 	}
 }
 
@@ -24,7 +24,7 @@ void ABaseAI::BeginPlay()
 {
 	Super::BeginPlay();
 
-	FLogger::CheckAndLogIsPropertySet(this, Montage, GET_MEMBER_NAME_CHECKED(ABaseAI, Montage));
+	FLogger::CheckAndLogIsPropertySet(this, MeleeMontage, GET_MEMBER_NAME_CHECKED(ABaseAI, MeleeMontage));
 	FLogger::CheckAndLogIsPropertySet(this, BehaviorTree, GET_MEMBER_NAME_CHECKED(ABaseAI, BehaviorTree));
 	FLogger::CheckAndLogIsPropertySet(this, PatrolPath, GET_MEMBER_NAME_CHECKED(ABaseAI, PatrolPath));
 }

@@ -18,8 +18,6 @@ UChasePlayer::UChasePlayer(const FObjectInitializer& ObjectInitializer)
 
 EBTNodeResult::Type UChasePlayer::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
-    //TODO: Change player location to either directly the player location or set the target to the target actor.
-
     ABaseAIController* Controller = Cast<ABaseAIController>(OwnerComp.GetAIOwner());
     if (!FLogger::CheckAndLogIsValidPtr(Controller, __FUNCTION__)) return EBTNodeResult::Failed;
 
