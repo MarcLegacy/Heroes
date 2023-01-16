@@ -55,6 +55,8 @@ protected:
 private:
 	void SetupStimulus();
 
+	void OnDistract();
+
 	/** Camera boom positioning the camera behind the character */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
     USpringArmComponent* CameraBoom;
@@ -63,6 +65,10 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
     UCameraComponent* FollowCamera;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true"))
+		USoundBase* DistractionSound;
+
+	UPROPERTY()
 	class UAIPerceptionStimuliSourceComponent* Stimulus;
 };
 

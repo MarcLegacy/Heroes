@@ -12,4 +12,5 @@ namespace BlackBoardKeys
     inline const TCHAR* PatrolPathVector = TEXT("PatrolPathVector");
     inline const TCHAR* PatrolPathIndex = TEXT("PatrolPathIndex");
     inline const TCHAR* IsPlayerInMeleeRange = TEXT("IsPlayerInMeleeRange");
+    inline const TCHAR* IsInvestigating = TEXT("IsInvestigating");
 }

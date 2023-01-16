@@ -9,6 +9,9 @@
 #include "Perception/AIPerceptionTypes.h"
 #include "BaseAIController.generated.h"
 
+class UAISenseConfig_Sight;
+class UAISenseConfig_Hearing;
+
 UCLASS()
 class HEROES_API ABaseAIController : public AAIController
 {
@@ -25,12 +28,16 @@ protected:
 
 private:
 	UFUNCTION()
-	void OnTargetDetected(AActor* Actor, FAIStimulus Stimulus);
+		void OnTargetDetected(AActor* Actor, FAIStimulus Stimulus);
+
+	UFUNCTION()
+		void OnUpdated(const TArray<AActor*>& UpdatedActors);
 
 	void SetupPerceptionSystem();
 
 	UPROPERTY()
     UBlackboardComponent* BlackboardComponent;
-	class UAISenseConfig_Sight* SightConfig;
+    UAISenseConfig_Sight* SightConfig;
+	UAISenseConfig_Hearing* HearingConfig;
 	ABaseAI* BaseAIPawn;
 };

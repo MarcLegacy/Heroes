@@ -29,3 +29,4 @@ void ABaseAI::BeginPlay()
 	FLogger::CheckAndLogIsPropertySet(this, PatrolPath, GET_MEMBER_NAME_CHECKED(ABaseAI, PatrolPath));
 }
 
+

@@ -5,10 +5,12 @@
 
 #include "BehaviorTree/BehaviorTree.h"
 #include "BehaviorTree/BlackboardComponent.h"
+#include "Heroes/Other/AITags.h"
 #include "Heroes/Other/BlackBoardKeys.h"
 #include "Heroes/Other/HeroesCharacter.h"
 #include "Heroes/Other/Logger.h"
 #include "Perception/AIPerceptionComponent.h"
+#include "Perception/AISenseConfig_Hearing.h"
 #include "Perception/AISenseConfig_Sight.h"
 
 ABaseAIController::ABaseAIController(const FObjectInitializer& ObjectInitializer)
@@ -46,13 +48,41 @@ void ABaseAIController::OnTargetDetected(AActor* Actor, FAIStimulus Stimulus)
     }
 }
 
+void ABaseAIController::OnUpdated(const TArray<AActor*>& UpdatedActors)
+{
+    for (size_t i = 0; i < UpdatedActors.Num(); i++)
+    {
+        FActorPerceptionBlueprintInfo Info;
+        GetPerceptionComponent()->GetActorsPerception(UpdatedActors[i], Info);
+
+        for (size_t j = 0; j < Info.LastSensedStimuli.Num(); j++)
+        {
+            const FAIStimulus Stimulus = Info.LastSensedStimuli[j];
+            if (Stimulus.Tag == AITags::NoiseTag)
+            {
+                BlackboardComponent->SetValueAsBool(BlackBoardKeys::IsInvestigating, Stimulus.WasSuccessfullySensed());
+                BlackboardComponent->SetValueAsVector(BlackBoardKeys::TargetLocation, Stimulus.StimulusLocation);
+            }
+            else
+            {
+                //BlackboardComponent->SetValueAsBool(BlackBoardKeys::CanSeePlayer, Stimulus.WasSuccessfullySensed());
+            }
+        }
+    }
+}
+
 void ABaseAIController::SetupPerceptionSystem()
 {
-    SightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("Sight Config"));
     SetPerceptionComponent(*CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("Perception Component")));
+
+    SightConfig = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("Sight Config"));
     GetPerceptionComponent()->SetDominantSense(*SightConfig->GetSenseImplementation());
     GetPerceptionComponent()->OnTargetPerceptionUpdated.AddDynamic(this, &ABaseAIController::OnTargetDetected);
     GetPerceptionComponent()->ConfigureSense(*SightConfig);
+
+    HearingConfig = CreateDefaultSubobject<UAISenseConfig_Hearing>(TEXT("Hearing Config"));
+    GetPerceptionComponent()->OnPerceptionUpdated.AddDynamic(this, &ABaseAIController::OnUpdated);
+    GetPerceptionComponent()->ConfigureSense(*HearingConfig);
 }
 
 

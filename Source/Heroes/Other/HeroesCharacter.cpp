@@ -1,13 +1,17 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "HeroesCharacter.h"
+
+#include "AITags.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/InputComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
+#include "Perception/AISense_Hearing.h"
 #include "Perception/AISense_Sight.h"
 
 //////////////////////////////////////////////////////////////////////////
@@ -64,6 +68,7 @@ void AHeroesCharacter::SetupPlayerInputComponent(class UInputComponent* PlayerIn
 	check(PlayerInputComponent);
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
+	PlayerInputComponent->BindAction("Distract", IE_Pressed, this, &AHeroesCharacter::OnDistract);
 
 	PlayerInputComponent->BindAxis("Move Forward / Backward", this, &AHeroesCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("Move Right / Left", this, &AHeroesCharacter::MoveRight);
@@ -86,6 +91,15 @@ void AHeroesCharacter::SetupStimulus()
 	Stimulus = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("Stimulus"));
 	Stimulus->RegisterForSense(TSubclassOf<UAISense_Sight>());
 	Stimulus->RegisterWithPerceptionSystem();
+}
+
+void AHeroesCharacter::OnDistract()
+{
+	if (DistractionSound)
+	{
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), DistractionSound, GetActorLocation());
+		UAISense_Hearing::ReportNoiseEvent(GetWorld(), GetActorLocation(), 1.0f, this, 0.0f, AITags::NoiseTag);
+	}
 }
 
 void AHeroesCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVector Location)
